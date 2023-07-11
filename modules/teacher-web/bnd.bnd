@@ -1,0 +1,4 @@
+Bundle-Name: teacher-web
+Bundle-SymbolicName: com.adj.teacher
+Bundle-Version: 1.0.0
+Export-Package: com.adj.teacher.constants

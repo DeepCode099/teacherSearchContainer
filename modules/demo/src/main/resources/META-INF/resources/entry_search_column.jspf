@@ -1,0 +1,72 @@
+<%-- 
+<%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+
+<c:choose>
+<c:when
+	test='${teacherManagementToolbarDisplayContext.getDisplayStyle().equals("descriptive")}'>
+	User Information
+	<liferay-ui:search-container-column-user showDetails="<%= false %>"
+		userId="<%= currentTeacher.getTeacherId() %>" />
+
+	Forming A Message Like Rahul Modified 10 Minutes Ago
+	<liferay-ui:search-container-column-text colspan="<%=2%>">
+		<%
+					String modificationDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - currentTeacher.getModifiedDate().getTime(), true);
+				%>
+		<h5 class="text-default">
+			<liferay-ui:message
+				arguments="<%= new String[]{currentTeacher.getUserName(), modificationDateDescription} %>"
+				key="x-modified-x-ago" />
+		</h5>
+		<h5>
+			<aui:a href="${viewAssignmentURL}">
+						${currentTeacher.getAge()}
+					</aui:a>
+		</h5>
+	</liferay-ui:search-container-column-text>
+
+	Trying To Have Action Performed. Like Edit, Delete, View Etc
+	<!-- <liferay-ui:search-container-column-jsp name="actions"
+		path="/entry_actions.jsp" /> -->
+</c:when>
+
+	Icon View
+		<c:when test='${teacherManagementToolbarDisplayContext.getDisplayStyle().equals("icon")}'>
+			<%
+				row.setCssClass("lfr-asset-item");
+			%>
+			<liferay-ui:search-container-column-text>
+				Vertical Card For An Assignment
+				<liferay-frontend:icon-vertical-card title="${currentTeacher.getName()}" actionJspServletContext="<%= application %>" resultRow="${row}" url="${viewAssignmentURL}" icon="card2" actionJsp="/assignment/entry_actions.jsp">
+					<liferay-frontend:vertical-card-sticker-bottom>
+						<liferay-ui:user-portrait cssClass="sticker sticker-bottom" userId="${entry.userId}"/>
+					</liferay-frontend:vertical-card-sticker-bottom>
+					
+					<liferay-frontend:vertical-card-footer>
+						<div class="truncate-text">
+							<%= HtmlUtil.stripHtml(entry.getDescription(locale)) %>
+						</div>
+					</liferay-frontend:vertical-card-footer>
+				</liferay-frontend:icon-vertical-card>
+			</liferay-ui:search-container-column-text>
+		</c:when>
+		
+
+Table View
+<c:otherwise>
+	<liferay-ui:search-container-column-text name="Name"
+		value="<%=currentTeacher.getName()%>" />
+	<liferay-ui:search-container-column-text name="Department"
+		value="<%=currentTeacher.getDepartment()%>" />
+	<liferay-ui:search-container-column-text name="Age"
+		value="<%=String.valueOf(currentTeacher.getAge())%>" />
+	<liferay-ui:search-container-column-text name="Salary"
+		value="<%=String.valueOf(currentTeacher.getSalary())%>" />
+	<liferay-ui:search-container-column-text name="Address"
+		value="<%=currentTeacher.getAddress()%>" />
+	Trying To Have Action Performed. Like Edit, Delete, View Etc
+	<liferay-ui:search-container-column-jsp name="actions"
+		path="/assignment/entry_actions.jsp" />
+</c:otherwise>
+</c:choose>
+ --%>
