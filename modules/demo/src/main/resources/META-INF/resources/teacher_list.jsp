@@ -5,7 +5,7 @@
 <%@ include file="init.jsp"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
-<div class="container">
+<div class="container ">
 	<clay:management-toolbar disabled="${teacherListCount eq 0}" displayContext="${teacherManagementToolbarDisplayContext}" itemsTotal="${teacherListCount}" searchContainerId="teacherListEntries" selectable="false" />
 	<liferay-ui:search-container id="teacherListEntries" iteratorURL="${portletURL}" emptyResultsMessage="no-teachers" total="${teacherListCount}">
 		<liferay-ui:search-container-results results="${teacherList}" />

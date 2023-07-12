@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + DemoPortletKeys.DEMO,
-		"mvc.command.name=/",
-		"mvc.command.name="+MVCCommandNames.VIEW_TEACHERS, }, service = MVCRenderCommand.class)
+		"mvc.command.name="+MVCCommandNames.VIEW_TEACHERS}, service = MVCRenderCommand.class)
 public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 
 	@Reference
