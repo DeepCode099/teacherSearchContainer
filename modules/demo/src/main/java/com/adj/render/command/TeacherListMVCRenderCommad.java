@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + DemoPortletKeys.DEMO,
+		"mvc.command.name=/",
 		"mvc.command.name="+MVCCommandNames.VIEW_TEACHERS, }, service = MVCRenderCommand.class)
 public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 
@@ -38,9 +39,6 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
-
-		List<Teacher> teacherList = teacherLocalService.getTeacherList();
-		int count = teacherLocalService.getTeacherCountByList(teacherList);
 		addTeacherListAttributes(renderRequest);
 		addTeacherToolbarAttributes(renderRequest, renderResponse);
 		return "/teacher_list.jsp";
@@ -65,7 +63,7 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		String orderByType = ParamUtil.getString(renderRequest, "orderByType", "asc");
 		
 		// Create A OrderbyComparator Which Will Be Also Used For Getting The List Of Teacher
-		OrderByComparator<Teacher> orderByComparator = OrderByComparatorFactoryUtil.create("sc_teacher", orderByCol, !("asc").equals(orderByType));
+		OrderByComparator<Teacher> orderByComparator = OrderByComparatorFactoryUtil.create("Teacher", orderByCol, !("asc").equals(orderByType));
 		
 		// Get The Keywords Information From The Search Container
 		String keywords = ParamUtil.getString(renderRequest, "keywords");
@@ -77,12 +75,9 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		// Call For Teacher Service To Get The Teacher Information and Count Details
 		//List<Teacher> assignments = assignmentService.getAssignmentsByKeywords(groupId, keywords, start, end, orderByComparator);
 		//long assignmentCount = assignmentService.getAssignmentsCountByKeywords(groupId, keywords);
-
 		List<Teacher> teacherList = teacherLocalService.getTeacherList();
 		int teacherCount = teacherLocalService.getTeacherCountByList(teacherList);
 
-		
-		
 		// Finally Setting Up the Teacher Relavant Values To The Request
 		renderRequest.setAttribute("teacherList", teacherList);
 		renderRequest.setAttribute("teacherCount", teacherCount);

@@ -44,8 +44,6 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	@Override
 	public CreationMenu getCreationMenu() {
 		// Creating A New Creation Menu For Adding A New Assignment
-		System.out.println("called-->");
-		System.out.println("currnet url ->"+currentURLObj.toString());
 		return new CreationMenu() {
 			{
 				addDropdownItem(

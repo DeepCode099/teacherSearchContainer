@@ -7,10 +7,9 @@
 
 <div class="container">
 	<clay:management-toolbar disabled="${teacherListCount eq 0}" displayContext="${teacherManagementToolbarDisplayContext}" itemsTotal="${teacherListCount}" searchContainerId="teacherListEntries" selectable="false" />
-	<liferay-ui:search-container id="teacherListEntries" iteratorURL="${portletURL}" total="${teacherListCount}">
+	<liferay-ui:search-container id="teacherListEntries" iteratorURL="${portletURL}" emptyResultsMessage="no-teachers" total="${teacherListCount}">
 		<liferay-ui:search-container-results results="${teacherList}" />
-		<liferay-ui:search-container-row className="com.adj.model.Teacher"
-			keyProperty="teacherId" modelVar="teacher">
+		<liferay-ui:search-container-row className="com.adj.model.Teacher"  modelVar="teacher">
 	<%-- To Handle Different Display View(Card|Table|List) We Are Doing It In A Separate JSP --%>
 			<%@include file="entry_search_column.jspf" %>
 				</liferay-ui:search-container-row>

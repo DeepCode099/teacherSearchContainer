@@ -95,7 +95,6 @@ public class DemoPortlet extends MVCPortlet {
 		 * 
 		 * } }
 		 */
-		
 		super.doView(renderRequest, renderResponse);
 	}
 
