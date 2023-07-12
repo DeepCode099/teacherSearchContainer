@@ -78,25 +78,24 @@ public class DemoPortlet extends MVCPortlet {
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-		Map<String, Serializable> values = new HashMap<>();
-		values.put("name", "test");
-		ServiceContext sc = new ServiceContext();
-		List<ObjectDefinition> objectDefinitionList = ObjectDefinitionLocalServiceUtil.getObjectDefinitions(-1, -1);
-		for (ObjectDefinition objectDef : objectDefinitionList) {
-			if(objectDef.getName().equalsIgnoreCase("C_Student")) {
-				try {
-					ObjectEntryLocalServiceUtil.addObjectEntry(20123, 0,objectDef.getObjectDefinitionId() , values, sc);
-					objectEntries2 = ObjectEntryLocalServiceUtil.getObjectEntries(0, objectDef.getObjectDefinitionId(), -1, -1);
-					for(ObjectEntry obj:objectEntries2) {
-						values2 = ObjectEntryLocalServiceUtil.getValues(obj);
-						System.out.println("values2"+values2);
-					}
-				} catch (PortalException e) {
-					e.printStackTrace();
-				}
-				
-			}
-		}
+		/*
+		 * Map<String, Serializable> values = new HashMap<>(); // values.put("name",
+		 * "test"); ServiceContext sc = new ServiceContext(); List<ObjectDefinition>
+		 * objectDefinitionList =
+		 * ObjectDefinitionLocalServiceUtil.getObjectDefinitions(-1, -1); for
+		 * (ObjectDefinition objectDef : objectDefinitionList) {
+		 * if(objectDef.getName().equalsIgnoreCase("C_Student")) { try {
+		 * ObjectEntryLocalServiceUtil.addObjectEntry(20123,
+		 * 0,objectDef.getObjectDefinitionId() , values, sc); objectEntries2 =
+		 * ObjectEntryLocalServiceUtil.getObjectEntries(0,
+		 * objectDef.getObjectDefinitionId(), -1, -1); for(ObjectEntry
+		 * obj:objectEntries2) { values2 = ObjectEntryLocalServiceUtil.getValues(obj);
+		 * // System.out.println("values2"+values2); } } catch (PortalException e) {
+		 * e.printStackTrace(); }
+		 * 
+		 * } }
+		 */
+		
 		super.doView(renderRequest, renderResponse);
 	}
 

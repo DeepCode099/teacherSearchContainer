@@ -92,6 +92,7 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		LiferayPortletRequest liferayPortletRequest = _portal.getLiferayPortletRequest(renderRequest);
 		LiferayPortletResponse liferayPortletResponse = _portal.getLiferayPortletResponse(renderResponse);
 		TeacherManagementToolbarDisplayContext teacherManagementToolbarDisplayContext = new TeacherManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, _portal.getHttpServletRequest(renderRequest));
+		System.out.println("teacher managemnt toolbar "+teacherManagementToolbarDisplayContext);
 		renderRequest.setAttribute("teacherManagementToolbarDisplayContext", teacherManagementToolbarDisplayContext);
 
 	}

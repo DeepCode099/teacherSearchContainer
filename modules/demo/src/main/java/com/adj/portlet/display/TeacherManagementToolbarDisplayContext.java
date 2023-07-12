@@ -44,11 +44,13 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	@Override
 	public CreationMenu getCreationMenu() {
 		// Creating A New Creation Menu For Adding A New Assignment
+		System.out.println("called-->");
+		System.out.println("currnet url ->"+currentURLObj.toString());
 		return new CreationMenu() {
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(liferayPortletResponse.createRenderURL(), "mvcRenderCommandName", MVCCommandNames.EDIT_TEACHER, "redirect", currentURLObj.toString());
+						dropdownItem.setHref(liferayPortletResponse.createRenderURL(), "mvcRenderCommandName", MVCCommandNames.VIEW_TEACHERS, "redirect", currentURLObj.toString());
 						dropdownItem.setLabel(LanguageUtil.get(request, "add-teacher"));
 					}
 				);
@@ -65,6 +67,7 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	public String getDisplayStyle() {
 		// Getting Style Selection From The Clay Management Toolbar
 		String displayStyle = ParamUtil.getString(request, "displayStyle");
+		System.out.println("display style called ");
 		
 		if(Validator.isNull(displayStyle)) {
 			// We Need To Setup A Default Display Style As Its Null
@@ -125,7 +128,7 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		}
 		
 		String orderByCol = ParamUtil.getString(request, "orderByCol", "age");
-		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+		String orderByType = ParamUtil.getString(request, "orderByType", "decs");
 
 		portletURL.setParameter("orderByCol", orderByCol);
 		portletURL.setParameter("orderByType", orderByType);
@@ -158,7 +161,7 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 					dropdownItem -> {
 						dropdownItem.setActive("age".equals(getOrderByCol()));
 						dropdownItem.setHref(getCurrentSortingURL(), "orderByCol", "age");
-						dropdownItem.setLabel(LanguageUtil.get(request, "Age"));
+						dropdownItem.setLabel(LanguageUtil.get(request, "age"));
 					}
 				);
 				add(
