@@ -340,6 +340,40 @@ public class TeacherLocalServiceWrapper
 		return _teacherLocalService.getTeachers(start, end);
 	}
 
+	@Override
+	public java.util.List<com.adj.model.Teacher> getTeachersByGroupId(
+		long groupId) {
+
+		return _teacherLocalService.getTeachersByGroupId(groupId);
+	}
+
+	@Override
+	public java.util.List<com.adj.model.Teacher> getTeachersByGroupId(
+		long groupId, int start, int end) {
+
+		return _teacherLocalService.getTeachersByGroupId(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.adj.model.Teacher> getTeachersByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.adj.model.Teacher>
+			orderByComparator) {
+
+		return _teacherLocalService.getTeachersByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.adj.model.Teacher> getTeachersByKeywords(
+		long groupId, String keyword, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.adj.model.Teacher>
+			orderByComparator) {
+
+		return _teacherLocalService.getTeachersByKeywords(
+			groupId, keyword, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the teachers matching the UUID and company.
 	 *
@@ -383,6 +417,12 @@ public class TeacherLocalServiceWrapper
 	@Override
 	public int getTeachersCount() {
 		return _teacherLocalService.getTeachersCount();
+	}
+
+	@Override
+	public long getTeachersCountByKeywords(long groupId, String keyword) {
+		return _teacherLocalService.getTeachersCountByKeywords(
+			groupId, keyword);
 	}
 
 	/**

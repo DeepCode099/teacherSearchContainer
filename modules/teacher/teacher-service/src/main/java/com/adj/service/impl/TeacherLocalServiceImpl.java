@@ -19,12 +19,13 @@ import com.adj.model.impl.TeacherImpl;
 import com.adj.service.TeacherLocalServiceUtil;
 import com.adj.service.base.TeacherLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class TeacherLocalServiceImpl extends TeacherLocalServiceBaseImpl {
 		// get who from IT or Management 
 		
 		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-		disjunction.add(RestrictionsFactoryUtil.eq("teacher.teacherId",15L));
+	//	disjunction.add(RestrictionsFactoryUtil.eq("teacher.teacherId",15L));
 		disjunction.add(RestrictionsFactoryUtil.like("teacher.department", "%Management%"));
 		dynamicQuery.add(disjunction); 
 		List<Teacher> teacherList = TeacherLocalServiceUtil.dynamicQuery(dynamicQuery);
@@ -68,5 +69,62 @@ public class TeacherLocalServiceImpl extends TeacherLocalServiceBaseImpl {
 		System.out.println("count is -->"+count);
 		return count;
 	}
+	
+	public List<Teacher> getTeachersByGroupId(long groupId) {
+		return teacherPersistence.findByGroupId(groupId);
+	}
+	
+	public List<Teacher> getTeachersByGroupId(long groupId, int start, int end) {
+		return teacherPersistence.findByGroupId(groupId, start, end);
+	}
+	
+	public List<Teacher> getTeachersByGroupId(long groupId, int start, int end, OrderByComparator<Teacher> orderByComparator) {
+		return teacherPersistence.findByGroupId(groupId, start, end, orderByComparator);
+	}
+	
+	private DynamicQuery getKeywordSearchDynamicQuery(long groupId, String keyword) {
+		DynamicQuery dynamicQuery = dynamicQuery().add(RestrictionsFactoryUtil.eq("groupId", groupId));
+		
+		if(Validator.isNotNull(keyword)) {
+			Disjunction disjunctionQuery = RestrictionsFactoryUtil.disjunction();
+			
+			disjunctionQuery.add(RestrictionsFactoryUtil.like("name", "%" + keyword + "%"));
+			disjunctionQuery.add(RestrictionsFactoryUtil.like("department", "%" + keyword + "%"));
+			
+			dynamicQuery.add(disjunctionQuery);
+		}
+		
+		return dynamicQuery;
+	}
+	
+	public long getTeachersCountByKeywords(long groupId, String keyword) {
+		return teacherLocalService.dynamicQueryCount(getKeywordSearchDynamicQuery(groupId, keyword));
+	}
+	
+	public List<Teacher> getTeachersByKeywords(long groupId, String keyword, int start, int end, OrderByComparator<Teacher> orderByComparator) {
+		return teacherLocalService.dynamicQuery(getKeywordSearchDynamicQuery(groupId, keyword), start, end, orderByComparator);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

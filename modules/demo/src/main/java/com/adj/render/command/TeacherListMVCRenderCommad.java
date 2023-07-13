@@ -2,11 +2,9 @@ package com.adj.render.command;
 
 import com.adj.constants.DemoPortletKeys;
 import com.adj.constants.MVCCommandNames;
-import com.adj.core.util.Pagination;
 import com.adj.model.Teacher;
 import com.adj.portlet.display.TeacherManagementToolbarDisplayContext;
 import com.adj.service.TeacherLocalService;
-import com.adj.service.TeacherLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -19,25 +17,26 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + DemoPortletKeys.DEMO,
-		"mvc.command.name="+MVCCommandNames.VIEW_TEACHERS}, service = MVCRenderCommand.class)
+		"mvc.command.name="+MVCCommandNames.VIEW_TEACHERS, }, service = MVCRenderCommand.class)
 public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 
-	@Reference
-	private TeacherLocalService teacherLocalService;
+	
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
+
+		//List<Teacher> teacherList = teacherLocalService.getTeacherList();
+	//	int count = teacherLocalService.getTeacherCountByList(teacherList);
+		System.out.println("---------testing-----");
 		addTeacherListAttributes(renderRequest);
 		addTeacherToolbarAttributes(renderRequest, renderResponse);
 		return "/teacher_list.jsp";
@@ -58,7 +57,7 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		int end = start + delta;
 		
 		// Get The Sorting Details For Teacher From The Search Container
-		String orderByCol = ParamUtil.getString(renderRequest, "orderByCol", "age");
+		String orderByCol = ParamUtil.getString(renderRequest, "orderByCol", "name");
 		String orderByType = ParamUtil.getString(renderRequest, "orderByType", "asc");
 		
 		// Create A OrderbyComparator Which Will Be Also Used For Getting The List Of Teacher
@@ -66,19 +65,26 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		
 		// Get The Keywords Information From The Search Container
 		String keywords = ParamUtil.getString(renderRequest, "keywords");
-		
+		System.out.println("keywords========"+keywords);
 		// For Teacher Retrival Purpose We Also Need Information About Which Site (Group Details) So Getting GroupId Information
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long groupId = themeDisplay.getScopeGroupId();
 
+		System.out.println("groupId=="+groupId+"keywords=="+keywords+"start==="+start+"end===="+end+"orderByComparator====="+orderByComparator);
+		
 		// Call For Teacher Service To Get The Teacher Information and Count Details
-		//List<Teacher> assignments = assignmentService.getAssignmentsByKeywords(groupId, keywords, start, end, orderByComparator);
-		//long assignmentCount = assignmentService.getAssignmentsCountByKeywords(groupId, keywords);
-		List<Teacher> teacherList = teacherLocalService.getTeacherList();
-		int teacherCount = teacherLocalService.getTeacherCountByList(teacherList);
+		List<Teacher> teachers = teacherLocalService.getTeachersByKeywords(groupId, keywords, start, end, orderByComparator);
+		long teacherCount = teacherLocalService.getTeachersCountByKeywords(groupId, keywords);
 
+				System.out.println("---list------"+teachers);
+		
+	//	List<Teacher> teacherList = teacherLocalService.getTeacherList();
+		//int teacherCount = teacherLocalService.getTeacherCountByList(teacherList);
+
+		
+		
 		// Finally Setting Up the Teacher Relavant Values To The Request
-		renderRequest.setAttribute("teacherList", teacherList);
+		renderRequest.setAttribute("teacherList", teachers);
 		renderRequest.setAttribute("teacherCount", teacherCount);
 	}
 
@@ -93,5 +99,8 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 	
 	@Reference
 	private Portal _portal;
+	
+	@Reference
+	private TeacherLocalService teacherLocalService;
 
 }

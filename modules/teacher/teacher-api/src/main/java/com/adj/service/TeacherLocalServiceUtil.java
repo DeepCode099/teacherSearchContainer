@@ -308,6 +308,32 @@ public class TeacherLocalServiceUtil {
 		return getService().getTeachers(start, end);
 	}
 
+	public static List<Teacher> getTeachersByGroupId(long groupId) {
+		return getService().getTeachersByGroupId(groupId);
+	}
+
+	public static List<Teacher> getTeachersByGroupId(
+		long groupId, int start, int end) {
+
+		return getService().getTeachersByGroupId(groupId, start, end);
+	}
+
+	public static List<Teacher> getTeachersByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<Teacher> orderByComparator) {
+
+		return getService().getTeachersByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	public static List<Teacher> getTeachersByKeywords(
+		long groupId, String keyword, int start, int end,
+		OrderByComparator<Teacher> orderByComparator) {
+
+		return getService().getTeachersByKeywords(
+			groupId, keyword, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the teachers matching the UUID and company.
 	 *
@@ -346,6 +372,12 @@ public class TeacherLocalServiceUtil {
 	 */
 	public static int getTeachersCount() {
 		return getService().getTeachersCount();
+	}
+
+	public static long getTeachersCountByKeywords(
+		long groupId, String keyword) {
+
+		return getService().getTeachersCountByKeywords(groupId, keyword);
 	}
 
 	/**

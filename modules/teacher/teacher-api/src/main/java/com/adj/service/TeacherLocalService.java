@@ -279,6 +279,22 @@ public interface TeacherLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Teacher> getTeachers(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Teacher> getTeachersByGroupId(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Teacher> getTeachersByGroupId(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Teacher> getTeachersByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<Teacher> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Teacher> getTeachersByKeywords(
+		long groupId, String keyword, int start, int end,
+		OrderByComparator<Teacher> orderByComparator);
+
 	/**
 	 * Returns all the teachers matching the UUID and company.
 	 *
@@ -312,6 +328,9 @@ public interface TeacherLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTeachersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getTeachersCountByKeywords(long groupId, String keyword);
 
 	/**
 	 * Updates the teacher in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
