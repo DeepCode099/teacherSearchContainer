@@ -34,6 +34,17 @@ public class TeacherLocalServiceWrapper
 		_teacherLocalService = teacherLocalService;
 	}
 
+	@Override
+	public com.adj.model.Teacher addTeacher(
+			long groupId, String name, String department, int age, long salary,
+			String address,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _teacherLocalService.addTeacher(
+			groupId, name, department, age, salary, address, serviceContext);
+	}
+
 	/**
 	 * Adds the teacher to the database. Also notifies the appropriate model listeners.
 	 *

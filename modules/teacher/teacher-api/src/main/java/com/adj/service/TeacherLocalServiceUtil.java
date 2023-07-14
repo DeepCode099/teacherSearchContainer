@@ -45,6 +45,15 @@ public class TeacherLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.adj.service.impl.TeacherLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static Teacher addTeacher(
+			long groupId, String name, String department, int age, long salary,
+			String address,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addTeacher(
+			groupId, name, department, age, salary, address, serviceContext);
+	}
 
 	/**
 	 * Adds the teacher to the database. Also notifies the appropriate model listeners.

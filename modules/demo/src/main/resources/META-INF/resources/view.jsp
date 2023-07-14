@@ -29,7 +29,9 @@
 	</aui:col>
 	<aui:button type="submit" name="" value="Submit" />
 </aui:form>
-
-<a href="<%= teacherListURL %>">TeacherList</a>
+<br>
+<a href="<%= teacherListURL %>" ><button class="btn btn-primary"> 
+            Teacher List
+        </button></a>
 
 

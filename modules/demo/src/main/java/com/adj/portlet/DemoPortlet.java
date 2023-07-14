@@ -43,38 +43,34 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class DemoPortlet extends MVCPortlet {
 
-	@Reference
-	private CounterLocalService counterLocalService;
+	/*
+	 * @Reference private CounterLocalService counterLocalService;
+	 * 
+	 * @Reference private TeacherLocalService teacherLocalService; private
+	 * List<ObjectEntry> objectEntries; private List<ObjectEntry> objectEntries2;
+	 * 
+	 * private Map<String, Serializable> values2;
+	 */
 
-	@Reference
-	private TeacherLocalService teacherLocalService;
-	private List<ObjectEntry> objectEntries;
-	private List<ObjectEntry> objectEntries2;
-
-	private Map<String, Serializable> values2;
-
-
-	@ProcessAction(name = "addTeacher")
-	public void addTeacher(ActionRequest actionRequest, ActionResponse actionResponse) {
-		System.out.println("test");
-		long teacherId = counterLocalService.increment(Teacher.class.getName());
-		String name = ParamUtil.getString(actionRequest, "name");
-		String department = ParamUtil.getString(actionRequest, "department");
-		String age = ParamUtil.getString(actionRequest, "age");
-		int teacherAge = Integer.parseInt(age);
-		String salary = ParamUtil.getString(actionRequest, "salary");
-		long teacherSalary = Long.parseLong(salary);
-		String address = ParamUtil.getString(actionRequest, "address");
-
-		Teacher teacher = teacherLocalService.createTeacher(teacherId);
-		teacher.setName(name);
-		teacher.setDepartment(department);
-		teacher.setAge(teacherAge);
-		teacher.setSalary(teacherSalary);
-		teacher.setAddress(address);
-		teacherLocalService.addTeacher(teacher);
-		actionResponse.setRenderParameter("mvcRenderCommandName", MVCCommandNames.VIEW_TEACHERS);
-	}
+//	@ProcessAction(name = "addTeacher")
+	/*
+	 * public void addTeacher(ActionRequest actionRequest, ActionResponse
+	 * actionResponse) { System.out.println("test"); long teacherId =
+	 * counterLocalService.increment(Teacher.class.getName()); String name =
+	 * ParamUtil.getString(actionRequest, "name"); String department =
+	 * ParamUtil.getString(actionRequest, "department"); String age =
+	 * ParamUtil.getString(actionRequest, "age"); int teacherAge =
+	 * Integer.parseInt(age); String salary = ParamUtil.getString(actionRequest,
+	 * "salary"); long teacherSalary = Long.parseLong(salary); String address =
+	 * ParamUtil.getString(actionRequest, "address");
+	 * 
+	 * Teacher teacher = teacherLocalService.createTeacher(teacherId);
+	 * teacher.setName(name); teacher.setDepartment(department);
+	 * teacher.setAge(teacherAge); teacher.setSalary(teacherSalary);
+	 * teacher.setAddress(address); teacherLocalService.addTeacher(teacher);
+	 * actionResponse.setRenderParameter("mvcRenderCommandName",
+	 * MVCCommandNames.VIEW_TEACHERS); }
+	 */
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {

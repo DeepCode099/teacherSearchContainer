@@ -26,17 +26,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + DemoPortletKeys.DEMO,
+		"mvc.command.name=/",
 		"mvc.command.name="+MVCCommandNames.VIEW_TEACHERS, }, service = MVCRenderCommand.class)
 public class TeacherListMVCRenderCommad implements MVCRenderCommand {
-
-	
-
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
-
-		//List<Teacher> teacherList = teacherLocalService.getTeacherList();
-	//	int count = teacherLocalService.getTeacherCountByList(teacherList);
-		System.out.println("---------testing-----");
 		addTeacherListAttributes(renderRequest);
 		addTeacherToolbarAttributes(renderRequest, renderResponse);
 		return "/teacher_list.jsp";
@@ -51,7 +45,7 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 	private void addTeacherListAttributes(RenderRequest renderRequest) {
 		// Resolve Start and End Of The Search Container Which Will Be Used As View Or Table To Display Teachers Details
 		int currentPage = ParamUtil.getInteger(renderRequest, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
-		int delta = ParamUtil.getInteger(renderRequest, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
+		int delta = ParamUtil.getInteger(renderRequest, SearchContainer.DEFAULT_DELTA_PARAM, 4);
 		
 		int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
 		int end = start + delta;
@@ -59,7 +53,7 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		// Get The Sorting Details For Teacher From The Search Container
 		String orderByCol = ParamUtil.getString(renderRequest, "orderByCol", "name");
 		String orderByType = ParamUtil.getString(renderRequest, "orderByType", "asc");
-		
+		System.out.println("orderbycol---"+orderByCol);
 		// Create A OrderbyComparator Which Will Be Also Used For Getting The List Of Teacher
 		OrderByComparator<Teacher> orderByComparator = OrderByComparatorFactoryUtil.create("Teacher", orderByCol, !("asc").equals(orderByType));
 		
@@ -80,12 +74,11 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 		
 	//	List<Teacher> teacherList = teacherLocalService.getTeacherList();
 		//int teacherCount = teacherLocalService.getTeacherCountByList(teacherList);
-
-		
-		
+	
 		// Finally Setting Up the Teacher Relavant Values To The Request
 		renderRequest.setAttribute("teacherList", teachers);
 		renderRequest.setAttribute("teacherCount", teacherCount);
+		renderRequest.setAttribute("delta", delta);
 	}
 
 	private void addTeacherToolbarAttributes(RenderRequest renderRequest , RenderResponse renderResponse) {

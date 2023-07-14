@@ -2,8 +2,10 @@
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 
 <c:choose>
+	<%-- Descriptive View --%>
 	<c:when
 		test='${teacherManagementToolbarDisplayContext.getDisplayStyle().equals("descriptive")}'>
+		<%-- User Information --%>
 		<liferay-ui:search-container-column-user showDetails="<%=false%>"
 			userId="<%=teacher.getTeacherId()%>" />
 		<liferay-ui:search-container-column-text colspan="<%=2%>">
@@ -22,26 +24,33 @@
 					</aui:a>
 			</h5>
 		</liferay-ui:search-container-column-text>
+		<%-- Trying To Have Action Performed. Like Edit, Delete, View Etc --%>
+		<liferay-ui:search-container-column-jsp name="actions"
+			path="/teacher/entry_actions.jsp" />
 	</c:when>
 
+	<%-- Icon View --%>
 	<c:when
 		test='${teacherManagementToolbarDisplayContext.getDisplayStyle().equals("icon")}'>
+
 		<%
 			row.setCssClass("lfr-asset-item");
 		%>
+
 		<liferay-ui:search-container-column-text>
-			<!-- 	Vertical Card For An Assignment -->
-			<liferay-frontend:icon-vertical-card title="${teacher.getName()}"
+			<%-- Vertical Card For An Assignment --%>
+			<liferay-frontend:icon-vertical-card
+				title="${teacher.getDepartment()}"
 				actionJspServletContext="<%= application %>" resultRow="${row}"
-				icon="card2">
+				icon="card2" actionJsp="/teacher/entry_actions.jsp">
 				<liferay-frontend:vertical-card-sticker-bottom>
 					<liferay-ui:user-portrait cssClass="sticker sticker-bottom"
-						userId="${teacher.teacherId}" />
+						userId="${teacher.userId}" />
 				</liferay-frontend:vertical-card-sticker-bottom>
 
 				<liferay-frontend:vertical-card-footer>
 					<div class="truncate-text">
-						<%=HtmlUtil.stripHtml(teacher.getAddress())%>
+						<%=HtmlUtil.stripHtml(teacher.getDepartment())%>
 					</div>
 				</liferay-frontend:vertical-card-footer>
 			</liferay-frontend:icon-vertical-card>
@@ -59,6 +68,19 @@
 			value="<%=String.valueOf(teacher.getSalary())%>" />
 		<liferay-ui:search-container-column-text name="Address"
 			value="<%=teacher.getAddress()%>" />
+		<%-- Trying To Have Action Performed. Like Edit, Delete, View Etc --%>
+		<liferay-ui:search-container-column-jsp name="actions"
+			path="/teacher/entry_actions.jsp" >
+			</liferay-ui:search-container-column-jsp>
+
+		<%-- <liferay-ui:search-container-column-text name="Actions">
+			<a href=""><img
+				src='<%=request.getContextPath() + "/image/edit-icon.png"%>'
+				width="17%" height="20" /></a>
+			<a href=""><img
+				src='<%=request.getContextPath() + "/image/delete-icon.png"%>' /></a>
+		</liferay-ui:search-container-column-text> --%>
+
 	</c:otherwise>
 
 </c:choose>

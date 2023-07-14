@@ -6,6 +6,9 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 
+<%@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
+
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />

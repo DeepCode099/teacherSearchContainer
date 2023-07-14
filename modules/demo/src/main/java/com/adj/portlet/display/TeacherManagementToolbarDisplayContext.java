@@ -35,9 +35,10 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		_themeDisplay = (ThemeDisplay) httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 	}
+
 	/**
-	 * Returns the creation menu for the toolbar
-	 * (plus sign on the management toolbar).
+	 * Returns the creation menu for the toolbar (plus sign on the management
+	 * toolbar).
 	 *
 	 * @return creation menu
 	 */
@@ -46,18 +47,20 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		// Creating A New Creation Menu For Adding A New Assignment
 		return new CreationMenu() {
 			{
-				addDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(liferayPortletResponse.createRenderURL(), "mvcRenderCommandName", MVCCommandNames.VIEW_TEACHERS, "redirect", currentURLObj.toString());
-						dropdownItem.setLabel(LanguageUtil.get(request, "add-teacher"));
-					}
-				);
+				System.out.println("creating menu");
+				addDropdownItem(dropdownItem -> {
+					dropdownItem.setHref(liferayPortletResponse.createRenderURL(), "mvcRenderCommandName",
+							MVCCommandNames.ADD_TEACHER_FORM, "redirect", currentURLObj.toString());
+					dropdownItem.setLabel(LanguageUtil.get(request, "add-teacher"));
+				});
 			}
 		};
 	}
+
 	
 	@Override
 	public String getClearResultsURL() {
+		System.out.println("getClearResultsURL method called");
 		return getSearchActionURL();
 	}
 
@@ -65,37 +68,39 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	public String getDisplayStyle() {
 		// Getting Style Selection From The Clay Management Toolbar
 		String displayStyle = ParamUtil.getString(request, "displayStyle");
-		System.out.println("display style called ");
-		
-		if(Validator.isNull(displayStyle)) {
+		System.out.println("display style called "+displayStyle);
+
+		if (Validator.isNull(displayStyle)) {
 			// We Need To Setup A Default Display Style As Its Null
 			displayStyle = _portalPreferences.getValue(DemoPortletKeys.DEMO, "teacher-display-style", "descriptive");
-		} 
-		else {
+		} else {
 			_portalPreferences.setValue(DemoPortletKeys.DEMO, "teacher-display-style", displayStyle);
-			
+
 			// Need To Ensure The Cache Is Resetted
 			request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 		}
-		
+
 		return displayStyle;
 	}
-	
+
 	/**
 	 * Return Order By Columns
 	 */
 	@Override
 	protected String getOrderByCol() {
+		System.out.println("getOrderByCol method called");
 		return ParamUtil.getString(request, "orderByCol", "age");
 	}
+
 	/**
 	 * Return Order By Type
 	 */
 	@Override
 	protected String getOrderByType() {
+		System.out.println("getOrderByType method called");
 		return ParamUtil.getString(request, "orderByType", "asc");
 	}
-	
+
 	/**
 	 * Returns the action URL for the search.
 	 *
@@ -103,7 +108,8 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	 */
 	@Override
 	public String getSearchActionURL() {
-		// First I Need Is The URL For The Search
+		// First I Need  The URL For The Search
+		System.out.println("getSerachActionUrl Method called ");
 		PortletURL searchURL = liferayPortletResponse.createRenderURL();
 		// Setting Up The Paramter Values
 		searchURL.setProperty("mvcRenderCommandName", MVCCommandNames.VIEW_TEACHERS);
@@ -113,29 +119,30 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		searchURL.setParameter("orderByType", getOrderByType());
 		return searchURL.toString();
 	}
-	
+
 	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
 		// First I Need A URL For View References
+		System.out.println("getViewTypeItems method called");
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 		portletURL.setProperty("mvcRenderCommandName", MVCCommandNames.VIEW_TEACHERS);
-		
+
 		int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 		if (delta > 0) {
 			portletURL.setParameter("delta", String.valueOf(delta));
 		}
-		
+
 		String orderByCol = ParamUtil.getString(request, "orderByCol", "age");
 		String orderByType = ParamUtil.getString(request, "orderByType", "decs");
 
 		portletURL.setParameter("orderByCol", orderByCol);
 		portletURL.setParameter("orderByType", orderByType);
-		
+
 		int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 		if (cur > 0) {
 			portletURL.setParameter("cur", String.valueOf(cur));
 		}
-		
+
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
@@ -145,7 +152,6 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		};
 	}
 
-	
 	/**
 	 * Return the option items for the sort column menu.
 	 *
@@ -153,26 +159,23 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	 */
 	@Override
 	protected List<DropdownItem> getOrderByDropdownItems() {
+		System.out.println("getOrderBy Dropdown Items called --->");
 		return new DropdownItemList() {
 			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive("age".equals(getOrderByCol()));
-						dropdownItem.setHref(getCurrentSortingURL(), "orderByCol", "age");
-						dropdownItem.setLabel(LanguageUtil.get(request, "age"));
-					}
-				);
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive("createDate".equals(getOrderByCol()));
-						dropdownItem.setHref(getCurrentSortingURL(), "orderByCol", "createDate");
-						dropdownItem.setLabel(LanguageUtil.get(request, "create-date"));
-					}
-				);
+				add(dropdownItem -> {
+					dropdownItem.setActive("age".equals(getOrderByCol()));
+					dropdownItem.setHref(getCurrentSortingURL(), "orderByCol", "age");
+					dropdownItem.setLabel(LanguageUtil.get(request, "age"));
+				});
+				add(dropdownItem -> {
+					dropdownItem.setActive("createDate".equals(getOrderByCol()));
+					dropdownItem.setHref(getCurrentSortingURL(), "orderByCol", "createDate");
+					dropdownItem.setLabel(LanguageUtil.get(request, "create-date"));
+				});
 			}
 		};
 	}
-	
+
 	/**
 	 * Returns the current sorting URL.
 	 *
@@ -181,22 +184,21 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 	 * @throws PortletException
 	 */
 	private PortletURL getCurrentSortingURL() throws PortletException {
+		System.out.println("getCurrentSorting() Url Called-->");
 		PortletURL sortingURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 		sortingURL.setParameter("mvcRenderCommandName", MVCCommandNames.VIEW_TEACHERS);
-		
+
 		// Reset My View For Current Sorted View
 		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
-		
+
 		String keywords = ParamUtil.getString(request, "keywords");
-		
+
 		if (Validator.isNotNull(keywords)) {
 			sortingURL.setParameter("keywords", keywords);
 		}
-		
+
 		return sortingURL;
 	}
-	
-	
 
 	private final PortalPreferences _portalPreferences;
 
