@@ -337,6 +337,11 @@ public interface TeacherLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getTeachersCountByKeywords(long groupId, String keyword);
 
+	public Teacher updateTeacher(
+			long teacherId, String name, String department, int age,
+			long salary, String address, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Updates the teacher in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -25,7 +25,6 @@ public class DeleteTeacherMVCActionCommand extends BaseMVCActionCommand {
 		System.out.println("delete action");
 		String id = ParamUtil.getString(actionRequest, "teacherId");
 		long teacherId = Long.parseLong(id);
-		System.out.println("teacher id -->" + teacherId);
 		teacherLocalService.deleteTeacher(teacherId);
 		// Add A New Success Message For : Assignment Deletion
 		SessionMessages.add(actionRequest, "teacherDeleted");

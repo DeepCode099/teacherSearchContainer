@@ -389,6 +389,16 @@ public class TeacherLocalServiceUtil {
 		return getService().getTeachersCountByKeywords(groupId, keyword);
 	}
 
+	public static Teacher updateTeacher(
+			long teacherId, String name, String department, int age,
+			long salary, String address,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateTeacher(
+			teacherId, name, department, age, salary, address, serviceContext);
+	}
+
 	/**
 	 * Updates the teacher in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

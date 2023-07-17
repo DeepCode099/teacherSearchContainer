@@ -82,6 +82,7 @@ public class TeacherLocalServiceImpl extends TeacherLocalServiceBaseImpl {
 		long userId = serviceContext.getUserId();
 		User user = userLocalService.getUser(userId);
 		
+		System.out.println("add Teacher method called");
 		// Generate A New Primary Key For The Teacher
 		long teacherId = counterLocalService.increment(Teacher.class.getName());
 		
@@ -105,13 +106,27 @@ public class TeacherLocalServiceImpl extends TeacherLocalServiceBaseImpl {
 		teacher.setUserName(user.getScreenName());
 		
 		teacher = super.addTeacher(teacher);
+		System.out.println("teacher added");
 	
 		// Persist And Return Teacher Entity Details To Databases
 		return teacher;
 	}
 	
 	
+	// Update Teacher 
 	
+	public Teacher updateTeacher(long teacherId, String name, String department, int age, long salary, String address,
+			ServiceContext serviceContext) throws PortalException  {
+		Teacher teacher = getTeacher(teacherId);
+		teacher.setName(name);
+		teacher.setDepartment(department);
+		teacher.setAddress(address);
+		teacher.setAge(age);
+		teacher.setSalary(salary);
+		teacher.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+		teacher = super.updateTeacher(teacher);
+		return teacher;
+	}
 	
 	public int getTeacherCountByList(List<Teacher> teacherList) {
 		int count = teacherList.size();
