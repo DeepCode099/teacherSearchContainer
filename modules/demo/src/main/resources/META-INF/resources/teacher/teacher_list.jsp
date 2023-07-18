@@ -2,7 +2,7 @@
 <%@page import="com.liferay.portal.kernel.dao.search.SearchContainer"%>
 <%@page import="com.adj.model.Teacher"%>
 <%@page import="java.util.List"%>
-<%@ include file="init.jsp"%>
+<%@ include file="../init.jsp"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <liferay-ui:success key="teacherDeleted" message="teacher-deleted-successfully" />
 

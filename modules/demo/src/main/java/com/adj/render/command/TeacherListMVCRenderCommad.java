@@ -33,7 +33,7 @@ public class TeacherListMVCRenderCommad implements MVCRenderCommand {
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		addTeacherListAttributes(renderRequest);
 		addTeacherToolbarAttributes(renderRequest, renderResponse);
-		return "/teacher_list.jsp";
+		return "/teacher/teacher_list.jsp";
 	}
 	
 

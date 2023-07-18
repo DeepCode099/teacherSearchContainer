@@ -57,13 +57,13 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		};
 	}
 
-	
+	// clearing searching result
 	@Override
 	public String getClearResultsURL() {
-		System.out.println("getClearResultsURL method called");
 		return getSearchActionURL();
 	}
 
+	// view different display styles
 	@Override
 	public String getDisplayStyle() {
 		// Getting Style Selection From The Clay Management Toolbar
@@ -120,6 +120,7 @@ public class TeacherManagementToolbarDisplayContext extends BaseManagementToolba
 		return searchURL.toString();
 	}
 
+	// call different view types methods inside this method
 	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
 		// First I Need A URL For View References
