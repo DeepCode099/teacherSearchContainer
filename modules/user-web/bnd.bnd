@@ -1,0 +1,4 @@
+Bundle-Name: user-web
+Bundle-SymbolicName: com.adjecti.user
+Bundle-Version: 1.0.0
+Export-Package: com.adjecti.user.constants
