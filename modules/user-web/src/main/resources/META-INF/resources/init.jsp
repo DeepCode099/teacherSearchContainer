@@ -6,7 +6,11 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+<%
+String curPortletNameSpace = themeDisplay.getPortletDisplay().getNamespace();
+%>

@@ -1,6 +1,8 @@
 package com.adjecti.user.render;
 
+import com.adjecti.user.constants.MVCCommandNames;
 import com.adjecti.user.constants.UserPortletKeys;
+import com.adjecti.user.displaycontext.UserManagementToolbarDisplayContext;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -29,33 +31,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + UserPortletKeys.USER,
-		"mvc.command.name=userRender" }, service = MVCRenderCommand.class)
+		"mvc.command.name= /",
+		"mvc.command.name="+MVCCommandNames.VIEW_USERS }, service = MVCRenderCommand.class)
 
 public class UserListMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
-				
-		addUserToolbarAttributes(renderRequest,renderResponse);
-		addTeacherListAttributes(renderRequest);
-
-		return "/user-list.jsp";
+		addUserToolbarAttributes(renderRequest, renderResponse);
+		addUserListAttributes(renderRequest);
+		return "/user/user-list.jsp";
 	}
-
 	
-	private void addTeacherListAttributes(RenderRequest renderRequest) {
+	private void addUserListAttributes(RenderRequest renderRequest) {
 		// Resolve Start and End Of The Search Container Which Will Be Used As View Or Table To Display Teachers Details
 		int currentPage = ParamUtil.getInteger(renderRequest, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
 		int delta = ParamUtil.getInteger(renderRequest, SearchContainer.DEFAULT_DELTA_PARAM, 4);
-		
 		int start = ((currentPage > 0) ? (currentPage - 1) : 0) * delta;
 		int end = start + delta;
-		
-		// Get The Sorting Details For Teacher From The Search Container
+		// Get The Sorting Details For User From The Search Container
 		String orderByCol = ParamUtil.getString(renderRequest, "orderByCol", "firstName");
 		String orderByType = ParamUtil.getString(renderRequest, "orderByType", "asc");
 		System.out.println("orderbycol---"+orderByCol);
-		// Create A OrderbyComparator Which Will Be Also Used For Getting The List Of Teacher
+		// Create A OrderbyComparator Which Will Be Also Used For Getting The List Of User
 		OrderByComparator<User> orderByComparator = OrderByComparatorFactoryUtil.create("User", orderByCol, !("asc").equals(orderByType));
 		
 		// Get The Keywords Information From The Search Container
@@ -64,13 +62,10 @@ public class UserListMVCRenderCommand implements MVCRenderCommand {
 		// For Teacher Retrival Purpose We Also Need Information About Which Site (Group Details) So Getting GroupId Information
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long groupId = themeDisplay.getScopeGroupId();
-
 		System.out.println("groupId=="+groupId+"keywords=="+keywords+"start==="+start+"end===="+end+"orderByComparator====="+orderByComparator);
-		
 		// Call For Teacher Service To Get The Teacher Information and Count Details
 		List<User> userList = userLocalService.dynamicQuery(getKeywordSearchDynamicQuery(20119,keywords), start, end, orderByComparator);
 		long userListCount = userLocalService.dynamicQueryCount(getKeywordSearchDynamicQuery(20119,keywords));
-
 		renderRequest.setAttribute("userList", userList);
 		renderRequest.setAttribute("userListCount", userListCount);
 		renderRequest.setAttribute("delta", delta);
@@ -81,7 +76,7 @@ public class UserListMVCRenderCommand implements MVCRenderCommand {
 		LiferayPortletResponse liferayPortletResponse = _portal.getLiferayPortletResponse(renderResponse);
 		UserManagementToolbarDisplayContext userManagementToolbarDisplayContext = new UserManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, _portal.getHttpServletRequest(renderRequest));
 		renderRequest.setAttribute("userManagementToolbarDisplayContext", userManagementToolbarDisplayContext);
-
+	
 	}
 	
 	

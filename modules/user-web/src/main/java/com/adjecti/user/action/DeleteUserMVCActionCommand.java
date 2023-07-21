@@ -12,7 +12,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, property = { "javax.portlet.name=" + UserPortletKeys.USER,
 		"mvc.command.name=" + com.adjecti.user.constants.MVCCommandNames.DELETE_USER}, service = MVCActionCommand.class)
 
-public class DeleteUserListMVCActionCommand extends BaseMVCActionCommand{
+public class DeleteUserMVCActionCommand extends BaseMVCActionCommand{
 
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {

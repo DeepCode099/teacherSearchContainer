@@ -14,7 +14,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, property = { "javax.portlet.name=" + UserPortletKeys.USER,
 		"mvc.command.name=" + MVCCommandNames.EDIT_USER}, service = MVCActionCommand.class)
 
-public class EditUserListMVCActionCommand extends BaseMVCActionCommand{
+public class EditUserMVCActionCommand extends BaseMVCActionCommand{
 
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {

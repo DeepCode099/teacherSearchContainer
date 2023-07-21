@@ -13,7 +13,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, property = { "javax.portlet.name=" + UserPortletKeys.USER,
 		"mvc.command.name=" + MVCCommandNames.EDIT_USER }, service = MVCRenderCommand.class)
 
-public class EditUserListMVCRenderCommand implements MVCRenderCommand{
+public class EditUserMVCRenderCommand implements MVCRenderCommand{
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {

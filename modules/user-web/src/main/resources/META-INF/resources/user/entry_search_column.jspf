@@ -15,18 +15,18 @@
 			%>
 			<h5 class="text-default">
 				<liferay-ui:message
-					arguments="<%=new String[] { user.getUserName(), modificationDateDescription }%>"
+					arguments="<%=new String[] { user.getScreenName(), modificationDateDescription }%>"
 					key="x-modified-x-ago" />
 			</h5>
 			<h5>
 				<aui:a href="">
-						${user.getName()}
+						${user.getFirstName()}
 					</aui:a>
 			</h5>
 		</liferay-ui:search-container-column-text>
 		<%-- Trying To Have Action Performed. Like Edit, Delete, View Etc --%>
 		<liferay-ui:search-container-column-jsp name="actions"
-			path="/teacher/entry_actions.jsp" />
+			path="/user/entry_actions.jsp" />
 	</c:when>
 
 	<%-- Icon View --%>
@@ -40,9 +40,9 @@
 		<liferay-ui:search-container-column-text>
 			<%-- Vertical Card For An Assignment --%>
 			<liferay-frontend:icon-vertical-card
-				title="${user.getDepartment()}"
+				title="${user.getFirstName()}"
 				actionJspServletContext="<%= application %>" resultRow="${row}"
-				icon="card2" actionJsp="/teacher/entry_actions.jsp">
+				icon="card2" path="/user/entry_actions.jsp">
 				<liferay-frontend:vertical-card-sticker-bottom>
 					<liferay-ui:user-portrait cssClass="sticker sticker-bottom"
 						userId="${user.userId}" />
@@ -50,7 +50,7 @@
 
 				<liferay-frontend:vertical-card-footer>
 					<div class="truncate-text">
-						<%=HtmlUtil.stripHtml(user.getDepartment())%>
+						<%=HtmlUtil.stripHtml(user.getScreenName())%>
 					</div>
 				</liferay-frontend:vertical-card-footer>
 			</liferay-frontend:icon-vertical-card>
@@ -59,28 +59,16 @@
 
 	<c:otherwise>
 		<liferay-ui:search-container-column-text name="Name"
-			value="<%=teacher.getName()%>" />
+			value="<%=user.getFirstName()%>" />
 		<liferay-ui:search-container-column-text name="Department"
-			value="<%=teacher.getDepartment()%>" />
+			value="<%=user.getScreenName()%>" />
 		<liferay-ui:search-container-column-text name="Age"
-			value="<%=String.valueOf(teacher.getAge())%>" />
-		<liferay-ui:search-container-column-text name="Salary"
-			value="<%=String.valueOf(teacher.getSalary())%>" />
-		<liferay-ui:search-container-column-text name="Address"
-			value="<%=teacher.getAddress()%>" />
-		<%-- Trying To Have Action Performed. Like Edit, Delete, View Etc --%>
+			value="<%=user.getEmailAddress()%>" />
+			<%-- Trying To Have Action Performed. Like Edit, Delete, View Etc --%>
 		<liferay-ui:search-container-column-jsp name="actions"
-			path="/teacher/entry_actions.jsp" >
-			</liferay-ui:search-container-column-jsp>
-
-		<%-- <liferay-ui:search-container-column-text name="Actions">
-			<a href=""><img
-				src='<%=request.getContextPath() + "/image/edit-icon.png"%>'
-				width="17%" height="20" /></a>
-			<a href=""><img
-				src='<%=request.getContextPath() + "/image/delete-icon.png"%>' /></a>
-		</liferay-ui:search-container-column-text> --%>
-
+			path="/user/entry_actions.jsp">
+			</liferay-ui:search-container-column-jsp>	
+			
 	</c:otherwise>
 
 </c:choose>
