@@ -32,11 +32,12 @@ public class UserActionCommand extends BaseMVCActionCommand{
 		String emailAddress = ParamUtil.getString(actionRequest, "emailAddress");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		 
+		String password = ParamUtil.getString(actionRequest, "password");
+		
 		ThemeDisplay  themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = null;
 		try {
-			user = UserLocalServiceUtil.addUser(20123, themeDisplay.getCompanyId(), false, "abc", "abc", false, screenName, emailAddress, Locale.US, firstName, "", lastName, 0, 0,false, 8, 27, 1997, "", 0, null, null, null, null, false, new ServiceContext());		
+			user = UserLocalServiceUtil.addUser(themeDisplay.getUserId(), themeDisplay.getCompanyId(), false, password, password, false, screenName, emailAddress, Locale.US, firstName, "", lastName, 0, 0,false, 8, 27, 1997, "", 1, null, null, null, null, false, new ServiceContext());		
 		System.out.println("created sucessfully--"+user.getFirstName());
 	
 		}catch(Exception e) {

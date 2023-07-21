@@ -14,8 +14,9 @@
  <aui:input name="emailAddress" type="text"/>
  <aui:input name="firstName" type="text"/>
  <aui:input name="lastName" type="text"/>
- <aui:button type="submit">Add User </aui:button>
+  <aui:input name="password" type="password"/>
+ <aui:button type="submit" value="Add User" />
  
 </aui:form>
 
-<aui:a href="<%=userRenderCommand %>">UserList</aui:a>
+<aui:a href="<%=userRenderCommand %>" cssClass="">UserList</aui:a>
